@@ -10,9 +10,10 @@ import (
 const port string = ":4000"
 
 type URLDescription struct {
-	URL         string
-	Method      string
-	Description string
+	URL         string `json:"url"`
+	Method      string `json:"method"`
+	Description string `json:"description"`
+	Payload     string `json:"payload,omitempty"`
 }
 
 func documentation(rw http.ResponseWriter, r *http.Request) {
@@ -21,6 +22,12 @@ func documentation(rw http.ResponseWriter, r *http.Request) {
 			URL:         "/",
 			Method:      "GET",
 			Description: "See Documentation",
+		},
+		{
+			URL:         "/blocks",
+			Method:      "POST",
+			Description: "Add A Block",
+			Payload:     "data:string",
 		},
 	}
 	rw.Header().Add("Content-Type", "application/json")
