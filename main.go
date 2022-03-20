@@ -16,6 +16,10 @@ type URLDescription struct {
 	Payload     string `json:"payload,omitempty"`
 }
 
+func (u URLDescription) String() string {
+	return "Hello I'm the URL Description"
+}
+
 func documentation(rw http.ResponseWriter, r *http.Request) {
 	data := []URLDescription{
 		{
@@ -35,6 +39,12 @@ func documentation(rw http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	fmt.Println(URLDescription{
+		URL:         "/",
+		Method:      "GET",
+		Description: "See Documentation",
+	},
+	)
 	http.HandleFunc("/", documentation)
 	fmt.Printf("Listening on http://localhost%s", port)
 	log.Fatal(http.ListenAndServe(port, nil))
