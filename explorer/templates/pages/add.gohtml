@@ -5,8 +5,9 @@
     <body>
         {{template "header" "Add a block"}}
         <main>
-            <form>
-                <input type="text" placeholder="Data for your block" required />
+            <form method="POST">
+                <input type="text" placeholder="Data for your block" required name="blockData"/>
+                <button>Add Block </button>
             </form>
         </main>
     {{template "footer"}}
