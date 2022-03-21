@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/nomadcoders/nomadcoin/blockchain"
+	"github.com/nomadcoders/nomadcoin/utils"
 )
 
 const port string = ":4000"
@@ -58,11 +59,9 @@ func blocks(rw http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(rw).Encode(blockchain.GetBlockchain().AllBlocks())
 	case "POST":
 		var addBlockBody AddBlockBody
-		fmt.Printf("Block Ready: ")
-		fmt.Println(addBlockBody)
-		json.NewDecoder(r.Body).Decode(&addBlockBody)
-		fmt.Printf("Block Add Finished: ")
-		fmt.Println(addBlockBody)
+		utils.HandleErr(json.NewDecoder(r.Body).Decode(&addBlockBody))
+		blockchain.GetBlockchain().AddBlock(addBlockBody.Message)
+		rw.WriteHeader(http.StatusCreated)
 	}
 }
 
